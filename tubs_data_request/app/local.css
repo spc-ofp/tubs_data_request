@@ -1,0 +1,98 @@
+/*
+Copyright (C) 2013 Bryan Scott <bryan.scott@pacificvms.net>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Afferro General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Afferro General Public License for more details.
+
+You should have received a copy of the GNU Afferro General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+/* 
+    Created on : Aug 28, 2013, 1:04:30 PM
+    Author     : Bryan Scott <bryan.scott@pacificvms.net>
+*/
+
+input.ng-invalid {
+  border: 1px solid red;
+}
+
+textarea.ng-invalid {
+  border: 1px solid red;
+}
+
+select.ng-invalid {
+  border: 1px solid red;
+}
+/***
+input.ng-valid {
+  border: 1px solid green;
+}
+**/
+
+.animate-container {
+  background:white;
+  border:1px solid black;
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+ 
+.animate-container > tr {
+  padding:10px;
+  list-style:none;
+}
+ 
+.animate-repeat.ng-enter,
+.animate-repeat.ng-leave,
+.animate-repeat.ng-move {
+  -webkit-transition:all linear 0.5s;
+  -moz-transition:all linear 0.5s;
+  -o-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+}
+ 
+.animate-repeat.ng-enter {
+  line-height:0;
+  opacity:0;
+  padding-top:0;
+  padding-bottom:0;
+}
+.animate-repeat.ng-enter.ng-enter-active {
+  line-height:20px;
+  opacity:1;
+  padding:10px;
+}
+ 
+.animate-repeat.ng-leave {
+  opacity:1;
+  line-height:20px;
+  padding:10px;
+}
+.animate-repeat.ng-leave.ng-leave-active {
+  opacity:0;
+  line-height:0;
+  padding-top:0;
+  padding-bottom:0;
+}
+ 
+.animate-repeat.ng-move { }
+.animate-repeat.ng-move.ng-move-active { }
+
+      .css-form input.ng-invalid.ng-dirty {
+        background-color: #FA787E;
+      }
+    
+      .css-form input.ng-valid.ng-dirty {
+        background-color: #78FA89;
+      }
+hr{
+    padding: 0px;
+    margin: 0px;    
+  }

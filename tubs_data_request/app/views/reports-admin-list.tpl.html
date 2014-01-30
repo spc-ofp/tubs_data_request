@@ -1,0 +1,88 @@
+﻿<table class="table table-striped">
+    <thead>
+        <tr>
+            <th ng-repeat="header in headers">
+                <sort-by onsort="onSort" sortdir="filterCriteria.sortDir" sortedby="filterCriteria.sortedBy" sortvalue="{{ header.value}}">{{ header.title}}</sort-by>
+            </th>
+            <th style="text-align: center">
+                <a href="#/admin/new"><i class="fa fa-plus "></i></a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <!--<tr>
+            <td>
+                <input type="text" class="form-control"
+                    autocomplete="off"
+                    typeahead-min-length="2"
+                    typeahead-wait-ms="30"
+                    typeahead-editable="true"
+                    typeahead-on-select="filterResult()"
+                    typeahead="vessel.Name for vessel in vesselTypeAhead($viewValue)"
+                    ng-model="filterCriteria.vesselName" />
+            </td>
+            <td>
+                <input class="form-control" type="number" on-enter-blur on-blur-change="filterResult()"
+                    ng-model="filterCriteria.dateYear" placeholder="Year" />
+            </td>
+            <td>
+                <input type="text" class="form-control"
+                    autocomplete="off"
+                    typeahead-min-length="2"
+                    typeahead-wait-ms="30"
+                    typeahead-editable="false"
+                    typeahead-on-select="filterResult()"
+                    typeahead="port.Name for port in portTypeAhead($viewValue)"
+                    ng-model="filterCriteria.port" />
+            </td>
+            <td>
+                <input class="form-control" type="text" on-enter-blur on-blur-change="filterResult()"
+                    ng-model="filterCriteria.obsvCode" /></td>
+            <td>
+                <input class="form-control" type="text" on-enter-blur on-blur-change="filterResult()"
+                    ng-model="filterCriteria.obsvTripCode" /></td>
+            <td>
+                <input type="text" class="form-control"
+                    autocomplete="off"
+                    typeahead-min-length="2"
+                    typeahead-wait-ms="30"
+                    typeahead-editable="true"
+                    typeahead-on-select="filterResult()"
+                    typeahead="prog.Code for prog in obsvProgTypeAhead($viewValue)"
+                    ng-model="filterCriteria.obsvProgCode" />
+            </td>
+            <td>
+                <input class="form-control" type="text" on-enter-blur on-blur-change="filterResult()"
+                    ng-model="filterCriteria.statusCode" placeholder="Status" /></td>
+            <td>
+                <input class="form-control" type="number" on-enter-blur on-blur-change="filterResult()"
+                    ng-model="filterCriteria.lastModifiedDateYear" placeholder="Year" /></td>
+            <!--            <td>
+                <input class="form-control" type="text" on-enter-blur on-blur-change="filterResult()"
+                    ng-model="filterCriteria.lastModifiedBy" />
+
+            </td>
+            <td><a ng-click="cancelFilter()"><i class="fa fa-undo"></i></a></td>
+        </tr>-->
+        <tr ng-show="isLoading"><td colspan="9"><h4 class="text-center"><i class="fa fa-spinner fa-spin"></i> Loading... </h4></td></tr>
+        <tr ng-repeat="item in items" class="my-repeat-animation" id="item_{{item.Id}}">
+            <td>{{item.reportGroupTitle}}</td>
+            <td>{{item.title}}</td>
+            <td>{{item.narrative}}</td>
+            <td style="white-space: nowrap;"><a ng-href="#/admin/edit/{{item.id}}"><i class="fa fa-edit"></i></a> <a ng-click="askDelete(item)"><i class="fa fa-trash-o"></i></a></td>
+        </tr>
+    </tbody>
+</table>
+
+<!--<div ng-show="totalItems > filterCriteria.pageSize" class="align-center">
+    <pagination total-items="totalItems" page="filterCriteria.pageNumber" items-per-page="filterCriteria.pageSize"
+        max-size="15" boundary-links="false"
+        on-select-page="selectPage(page)">
+        </pagination>
+</div>
+
+<div ng-show="totalItems === 0 && !isLoading">
+    <h3>No Items Found</h3>
+</div>-->
+
+

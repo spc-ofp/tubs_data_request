@@ -218,6 +218,21 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\header.html" />
+    <Content Include="app\index.html" />
+    <Content Include="app\js\app.js" />
+    <Content Include="app\js\controllers.js" />
+    <Content Include="app\js\directives.js" />
+    <Content Include="app\js\filters.js" />
+    <Content Include="app\js\services.js" />
+    <Content Include="app\local.css" />
+    <Content Include="app\sqlcolors.css" />
+    <Content Include="app\test\controller.test.js" />
+    <Content Include="app\views\index.tpl.html" />
+    <Content Include="app\views\reports-admin-edit.tpl.html" />
+    <Content Include="app\views\reports-admin-list.tpl.html" />
+    <Content Include="app\views\reports-general.tpl.html" />
+    <Content Include="app\views\reports-view.tpl.html" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />

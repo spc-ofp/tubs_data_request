@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="stylesheet" href="../Content/select2.css"/>
+<link rel="stylesheet" href="../Content/angular-ui.css"  /> 
+<link rel="stylesheet" href="../Content/bootstrap.css"  /> 
+<link rel="stylesheet" href="../Content/toastr.css"  />
+<link rel="stylesheet" href="../Content/font-awesome.css"  />  
+<link rel="stylesheet" href="../Content/flags.css"  />  
+<!--- Local custom styles --->
+<link rel="stylesheet" href="local.css"/>
+<title>TUBS REPORTS</title>
+</head>
+<body>
+    
+    <div class="row" ng-app="tubsdatarequest">
+         <div class="col-sm-2 hidden-sm hidden-xs" ng-controller="NavCtrl">
+             <div class="center-block btn-block" ng-repeat="group in reportGroups">
+                <a class="btn btn-default btn-block" role="button" ng-if="!group.CustomUrl" ng-class="{ active: (group.Code === selectedGroup.Code) }" ng-href="#/report/{{group.Code}}">{{group.Title}}</a>
+                <a class="btn btn-default btn-block" role="button" ng-if="group.CustomUrl" ng-class="{ active: (group.Code === selectedGroup.Code) }" ng-href="#/{{group.customUrl}}">{{group.Title}}</a>
+             </div>
+            <p>&nbsp;</p>
+        </div>
+        <ng-include src="'header.html'"></ng-include>
+        <div class="col-sm-10" ng-view></div>
+    </div>
+    <script src="../Scripts/jquery-2.0.3.js"></script>
+    <script src="../Scripts/angular.js"></script>
+    <script src="../Scripts/angular-resource.js"></script>
+    <script src="../Scripts/angular-route.js"></script>
+    <script src="../Scripts/angular-animate.js"></script>
+    <script src="../Scripts/angular-ui.js"></script>    
+    <script src="../Scripts/ui-bootstrap-tpls-0.9.0.js"></script>  
+    <script src="../Scripts/moment.js"></script> 
+    <script src="../Scripts/select2.js"></script>  
+    <script src="../Scripts/toastr.js"></script>  
+    <!-- Local Application-->
+    <script src="js/app.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/directives.js"></script>  
+</body>
+</html>   

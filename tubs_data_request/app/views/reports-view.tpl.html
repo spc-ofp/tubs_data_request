@@ -1,0 +1,45 @@
+<ul class="breadcrumb">
+        <li><a href="#/">Reports</a></li>
+        <li ng-if="!report.ReportGroupCustomURL"><a ng-href="#/report/{{report.ReportGroupCode}}">{{report.ReportGroupText}}</a></li>
+        <li ng-if="report.ReportGroupCustomURL"><a ng-href="#/{{report.ReportGroupCustomURL}}">{{report.ReportGroupText}}</a></li>
+        <li class="active">{{report.Title}}</li>
+</ul>
+
+
+<h4 class="text-center" ng-show="isLoading"><i class="fa fa-spinner fa-spin"></i> Loading... </h4>
+<h4 class="text-center text-danger" ng-show="(totalItems === 0) && !isLoading">No Data Found</h4>
+<div ng-hide="totalItems === 0">
+    <p>
+    <h5 class="center-block">Number of records <span class="label label-default">{{totalItems}}</span> <a ng-click="exportToCsv()" target="_self"><i class="fa fa-download"></i></a>(csv)</h5>
+    <!--<a ng-href="../api/reportdef/runfullreport/2">test</a>-->
+    
+</p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th ng-repeat="header in headers">
+                    <sort-by onsort="onSort" sortdir="filterCriteria.sortDir" sortedby="filterCriteria.sortedBy" sortvalue="{{ header.value}}">
+                        {{ header.title}}
+                    </sort-by>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in data">
+                <td ng-repeat="header in headers">
+                   {{row[header.value]}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div ng-show="totalItems > filterCriteria.pageSize" class="align-center">
+        <pagination total-items="totalItems" page="filterCriteria.pageNumber" items-per-page="filterCriteria.pageSize"
+                    max-size="15" boundary-links="false"
+                    on-select-page="selectPage(page)">
+        </pagination>
+    </div>
+
+
+</div>    
+
