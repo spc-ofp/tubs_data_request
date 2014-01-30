@@ -1,305 +1,112 @@
  
     <ul class="breadcrumb">
-        <li><a href="#/">Reports</a></li>
-        <li class="active">{{reportGroup.Text}}</li>
+        <li><a href="#/">Request</a></li>
+        <li class="active">{{action}} - {{item.TripNo}}</li>
     </ul>
-    <form role="form" name="myForm">
-        <input type="hidden" name="flag" value="{{params.flag.ctyCode}}" /> 
-        <input type="hidden" name="reportId" value="{{report.reportId}}" /> 
-        <input type="hidden" name="eez" value="{{params.eez.ctyCode}}" />
-        
-        <div class="form-group">
-            <label class="sr-only" for="report">Report</label>
-            <select class="form-control" id="report" size="10"
-                    required
-                    ng-options="report as (report.reportNumber + ' : ' + report.title) for report in reports"
-                    ng-change="onSelectedReportChange()"
-                    ng-model="report"
-                    ng-dblclick="reportDblClick()"></select>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-12">
-                <p>{{report.narrative}}</p>
-            </div>
-        </div>
-        <div class="row" ng-hide="!report">
-            
-
-            <div class="col-sm-4" ng-show="report.optDateFrom">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">Date From</h3></div>
-                    <div class="panel-body">
-                        <input type="text" id="dateFrom" name="dateFrom" class="form-control" placeholder="dd MMM yyyy" 
-                               ui-date='{ dateFormat: "d M yy" };' ui-date-format  
-                               ng-model="params.dateFrom" 
-                               ng-required="report.optDateFrom"/> 
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-4" ng-show="report.optDateTo">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">Date To</h3></div>
-                    <div class="panel-body">
-                        <input type="text" id="dateTo" name="dateTo" class="form-control" placeholder="dd MMM yyyy" 
-                               ui-date='{ dateFormat: "d M yy" };' ui-date-format  
-                               ng-model="params.dateTo" 
-                               ng-required="report.optDateTo"/> 
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-sm-4" ng-show="report.optMonth">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">Month</h3></div>
-                    <div class="panel-body">
-                        <select name="optMonth" class="form-control"  
-                                ng-model="params.month"
-                                ng-options="month for month in months">
-                            <option value="">All</option>
-                        </select>                   
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-4" ng-show="report.optYear">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">Year</h3></div>
-                    <div class="panel-body">
-                        <input type="number" class="form-control" id="optYear" name="optYear" 
-                               ng-model="params.year" min="1950" max="currentYear"
-                               ng-required="report.optYear">
-
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-sm-4" ng-show="report.optActive">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">Active</h3></div>
-                    <div class="panel-body">
-                        <select name="optActive" class="form-control"  
-                                ng-model="params.active">
-                            <option value="">License active during report date range</option>
-                            <option value="2">License start date within report date range</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-4" ng-show="report.optCpue">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">CPUE</h3></div>
-                    <div class="panel-body">
-                        <input type="text" class="form-control" id="optCpue" placeholder="optCpue">
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-4" ng-show="report.optCompany">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">Company</h3></div>
-                    <div class="panel-body">
-                        <input type="text" class="form-control" id="optCompany" placeholder="optCompany">
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-sm-4" ng-show="report.optEEZ">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">EEZ</h3></div>
-                    <div class="panel-body">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="EEZ" 
-                               ng-model="eez" 
-                               typeahead-min-length="2" 
-                               typeahead-wait-ms="30"
-                               typeahead-editable="false"
-                               typeahead="cty as cty.name for cty in countryTypeAhead($viewValue)"
-                               ng-required="report.optEEZ === 1"
-                               /> 
-                            <span class="input-group-addon"><img ng-if="eez" class="flag flag-{{eez.code | lowercase}}" alt="eez.code" /></span>
-                            <!--<img src="blank.gif" class="flag flag-cz" alt="République Tchèque" /> - See more at: http://flag-sprites.com/#sthash.twQkgH8q.dpuf-->                   
-                        </div>                        
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-4" ng-show="report.optFishMethod">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">Fishing Method</h3></div>
-                    <div class="panel-body">
-                        <input type="text" class="form-control" id="optFishMethod" placeholder="optFishMethod">
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-4" ng-show="report.optFlag">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">Flag</h3></div>
-                    <div class="panel-body">
-                        <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Vessel Flag" 
-                               ng-model="flag" 
-                               typeahead-min-length="2" 
-                               typeahead-wait-ms="30"
-                               typeahead-editable="false"
-                               typeahead="cty as cty.ctyName for cty in countryTypeAhead($viewValue)"
-                               /> 
-                    <span class="input-group-addon"><img ng-if="flag" ng-src="/tufman/media/flags/{{flag.ctyCode | lowercase}}.png" alt="params.flag.ctyCode" /></span>                   
-                        </div>
-                    </div>
-                </div>
-            </div   >
-
-
-            <div class="col-sm-4" ng-show="report.optGear">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">Gear</h3></div>
-                    <div class="panel-body">
-                         <select class="form-control" id="gear" name="gear"
-                                 ng-required="report.optGear == 1"
-                                 ng-options="gear.id as gear.name for gear in gearTypes"
-                                 ng-model="params.gear">
-                         </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-4" ng-show="report.optLegend">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">Legend</h3></div>
-                    <div class="panel-body">
-                        <input type="text" class="form-control" id="optLegend" placeholder="optLegend">
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-4" ng-show="report.optSpecies">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">Species</h3></div>
-                    <div class="panel-body">
-                        <input type="text" ng-model="params.species" class="form-control" id="optSpecies" placeholder="optSpecies" ng-required="report.optSpecies === 1">
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-4" ng-show="report.optTelexCode">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">Telex Area</h3></div>
-                    <div class="panel-body">
-                        <input type="text" class="form-control" id="optTelexCode" placeholder="optTelexCode">
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-4" ng-show="report.optTrip">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">Trip</h3></div>
-                    <div class="panel-body">                      
-                        <input type="text" class="form-control" id="optTrip" placeholder="optTrip">
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-4" ng-show="report.optVessel">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">Vessel</h3></div>
-                    <div class="panel-body">
-                        <input type="text" class="form-control" id="optVessel" placeholder="optVessel">
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-4" ng-show="report.optArea">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">Area</h3></div>
-                    <div class="panel-body">
-                        <label>
-                            <input type="checkbox"> EEZ Waters only
-                        </label>
-                        <label>
-                            <input type="checkbox"> Sub area breakdown
-                        </label>
-                        <label>
-                            <input type="checkbox"> EEZ breakdown
-                        </label>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-sm-4" ng-show="report.optCatchNation > 0">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">Catch Nationality</h3></div>
-                    <div class="panel-body">
-                        <label>
-                            <input type="checkbox"> National Fleet
-                        </label>
-                        <label style="color: green">Licensed Vessels Only</label>
-                        <label>
-                            <input type="checkbox"> Company Nationality
-                        </label>
-                        <label>
-                            <input type="checkbox"> Flag of Registration
-                        </label>
-                        <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Nationality" 
-                               ng-model="params.flag" 
-                               typeahead-min-length="2" 
-                               typeahead-wait-ms="30"
-                               typeahead-editable="false"
-                               typeahead="cty as cty.ctyName for cty in countryTypeAhead($viewValue)"
-                               /> 
-                    <span class="input-group-addon"><img ng-if="params.flag" ng-src="/tufman/media/flags/{{params.flag.ctyCode | lowercase}}.png" alt="params.flag.ctyCode" /></span>                   
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-sm-4" ng-show="report.optCompanyVessel > 0">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="panel-title">Company / Vessel</h3></div>
-                    <div class="panel-body">
-                        <div class="btn-block">
-                        <input type="text" class="form-control" placeholder="Company" 
-                               ng-model="params.company" 
-                               typeahead-min-length="2" 
-                               typeahead-wait-ms="30"
-                               typeahead-editable="false"
-                               typeahead="cty as cty.ctyName for cty in countryTypeAhead($viewValue)"
-                               /></div>
-                        <div class="btn-block">
-                    <input type="text" class="form-control" placeholder="Vessel" 
-                               ng-model="params.vessel" 
-                               typeahead-min-length="2" 
-                               typeahead-wait-ms="30"
-                               typeahead-editable="false"
-                               typeahead="cty as cty.ctyName for cty in countryTypeAhead($viewValue)"
-                               /></div>
-                    <div class="btn-block">
-                        
-                    <input type="text" class="form-control" placeholder="Trip" 
-                               ng-model="params.trip" 
-                               typeahead-min-length="2" 
-                               typeahead-wait-ms="30"
-                               typeahead-editable="false"
-                               typeahead="cty as cty.ctyName for cty in countryTypeAhead($viewValue)"
-                               /> 
-                    </div>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-        
-        <div class="row" ng-hide="!report" >
-            <div class="col-sm-12">
-                 <a href="" ng-click="resetParams()" class="btn btn-default">Reset</a>
-                <button type="submit" ng-click="generateReport()" class="btn btn-primary" ng-disabled="!report || myForm.$invalid">Submit</button>
-            </div>
-        </div>
-    </form>
+   <form class="form-horizontal" role="form">
+  <div class="form-group">
+    <label for="tripNo" class="col-sm-2 control-label">Trip No.</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="tripNo" placeholder="Trip No."
+          ng-model="item.TripNo">
+    </div>
+  </div>
+         <div class="form-group">
+    <label for="PrgTripNo" class="col-sm-2 control-label">Program Trip No</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="PrgTripNo" placeholder="Program Trip No"
+          ng-model="item.PrgTripNo">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="obsprgcode" class="col-sm-2 control-label">OBS Program Code</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="obsprgcode" placeholder="OBS Program Code"
+          ng-model="item.ObsprgCode">
+    </div>
+  </div>
+   <div class="form-group">
+    <label for="StaffCode" class="col-sm-2 control-label">Observer Code</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="StaffCode" placeholder="Observer Code"
+          ng-model="item.StaffCode">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="VesselId" class="col-sm-2 control-label">Vessel ID</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="VesselId" placeholder="Vessel ID"
+          ng-model="item.VesselId">
+    </div>
+  </div>
+<div class="form-group">
+    <label for="DepartDate" class="col-sm-2 control-label">Depart Date</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="DepartDate" placeholder="Depart Date"
+          ng-model="item.DepartDate">
+    </div>
+  </div>
+<div class="form-group">
+    <label for="ReturnDate" class="col-sm-2 control-label">Return Date</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="ReturnDate" placeholder="Return Date"
+          ng-model="item.ReturnDate">
+    </div>
+  </div>
+<div class="form-group">
+    <label for="DepartPort" class="col-sm-2 control-label">Depart Port</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="DepartPort" placeholder="Depart Port"
+          ng-model="item.DepartPort">
+    </div>
+  </div>
+<div class="form-group">
+    <label for="ReturnPort" class="col-sm-2 control-label">Return Port</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="ReturnPort" placeholder="Return Port"
+          ng-model="item.ReturnPort">
+    </div>
+  </div>
+<div class="form-group">
+    <label for="RequestDate" class="col-sm-2 control-label">Request Date</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="RequestDate" placeholder="Request Date"
+          ng-model="item.RequestDate">
+    </div>
+  </div>
+<div class="form-group">
+    <label for="SendDate" class="col-sm-2 control-label">Send Date</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="SendDate" placeholder="Send Date"
+          ng-model="item.SendDate">
+    </div>
+  </div>
+<div class="form-group">
+    <label for="IsComplete" class="col-sm-2 control-label">Is Complete?</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="IsComplete" placeholder="Is Complete?"
+          ng-model="item.IsComplete">
+    </div>
+  </div>
+<div class="form-group">
+    <label for="FormTypeId" class="col-sm-2 control-label">Form Type ID</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="FormTypeId" placeholder="Form Type ID"
+          ng-model="item.FormTypeId">
+    </div>
+  </div>
+<div class="form-group">
+    <label for="Comments" class="col-sm-2 control-label">Comments</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="Comments" placeholder="Comments"
+          ng-model="item.Comments">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">Submit</button>
+    </div>
+  </div>
+</form>
    
 <p>&nbsp;</p>

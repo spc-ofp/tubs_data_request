@@ -73,90 +73,12 @@ controllers.controller("RequestListCtrl", function ($q, $scope, $location, $rout
     $scope.fetchResult();
 });
 
-controllers.controller("RequestEditCtrl", function ($q, $scope, $location, $routeParams) {
-    $scope.sqlEditorOptions = {
-        lineWrapping : true,
-        lineNumbers: true,
-        matchBrackets: true,
-        indentWithTabs: true,
-        smartIndent: true,        
-        mode: 'text/x-sql'
-    };
-    $scope.reportGroups = ReportGroup.query();
-    $scope.params = getParams();
-    $scope.validateForm = function () { return true; }
-    $scope.gearTypes = getGearTypes();
-    $scope.checkSql = function () { checkSql($scope.item, $scope.params); $scope.isOrderByOk = isOrderByOk($scope.item.reportQuery) };
-    $scope.checkColumnCountOk = function () { $scope.isColumnCountOk = isColumnCountOk($scope.item.columnSqlNames, $scope.item.columnTitles) };
-    $scope.checkSqlParameter = function (p) { checkSqlParameter($scope.item, p) };
-    $scope.gears = [];
-    $scope.toggleGearSelection = function (gear) { toggleGearSelection($scope.gears, gear) };
-
-    $scope.isClean = function () {
-        return angular.equals(self.original, $scope.item)
-                && angular.equals(self.originalGears, $scope.gears);
-    };
-
-    $scope.save = function () {
-        $scope.item.Gears = $scope.gears.join();
-        ReportDef.update({ id: $scope.item.id }, $scope.item, function () {
-            $location.path('/admin');
-        }, function () { toastr.error("Failed!"); }
-        );
-    };
-
-    $q.all([
-        ReportDef.get({ reportId: $routeParams.id }).$promise
-    ]).then(function (data) {
-        self.original = data[0];
-        if (self.original.Gears) {
-            self.originalGears = self.original.Gears.split(",");
-            $scope.gears = self.original.Gears.split(",");
-        }
-        $scope.item = new ReportDef(self.original);
-        $scope.checkSql();
-        $scope.checkColumnCountOk();
-    });
+controllers.controller("RequestEditCtrl", function ($q, $scope, $location, $routeParams, RequestHeader) {
+    $scope.action = "Edit";
+    $scope.item = RequestHeader.get({ id: $routeParams.id });
 });
 
-controllers.controller("RequestCreateCtrl", function ($q, $scope, $location, $routeParams)
+controllers.controller("RequestCreateCtrl", function ($q, $scope, $location, $routeParams,RequestHeader)
 {
-    $scope.sqlEditorOptions = {
-        lineWrapping : true,
-        lineNumbers: true,
-        matchBrackets: true,
-        indentWithTabs: true,
-        smartIndent: true,        
-        mode: 'text/x-sql'
-    };
-    $scope.reportGroups = ReportGroup.query();
-    $scope.params = getParams();
-    $scope.gearTypes = getGearTypes();
-    $scope.checkSql = function () { checkSql($scope.item, $scope.params); $scope.isOrderByOk = isOrderByOk($scope.item.reportQuery) };
-    $scope.checkSqlParameter = function (p) { checkSqlParameter($scope.item, p) };
-    $scope.toggleGearSelection = function (gear) { toggleGearSelection($scope.gears, gear) };
-    $scope.item = {};
-    $scope.isColumnCountOk = true;
-    $scope.isOrderByOk = true;
-    $scope.checkColumnCountOk = function () { $scope.isColumnCountOk = isColumnCountOk($scope.item.columnSqlNames, $scope.item.columnTitles) };
-    $scope.params.forEach(function (entry) {
-        $scope.item[entry.key] = 0;
-    });
-
-    $scope.save = function () {
-        if ($scope.gears != undefined) {
-            $scope.item.optGear = $scope.gears.join();
-        }
-        ReportDef.save($scope.item, function () {
-            $location.path('/admin');
-        }, function () { toastr.error("Failed!"); }
-        );
-    };
-    $scope.validateForm = function () {
-        var result = true;
-        $scope.params.forEach(function (entry) {
-           result = (result && entry.isValid)
-        });
-        return result;
-    }
+    $scope.action = "Create";
 });
