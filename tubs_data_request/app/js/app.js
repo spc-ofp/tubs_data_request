@@ -16,28 +16,18 @@
  */
 var module = angular.module('tubsdatarequest', ['tubsdatarequest.filters', 'tubsdatarequest.services', 'tubsdatarequest.directives', 'tubsdatarequest.controllers',
      'ngRoute', 'ngAnimate', 'ui.directives', 'ui.bootstrap'
-     ]).config(['$routeProvider', function($routeProvider) {
+]).config(['$routeProvider', function ($routeProvider) {
+
     $routeProvider.when('/', {controller: 'IndexCtrl', templateUrl: 'views/index.tpl.html'});
-    $routeProvider.when('/report/:area',   {
-        controller: 'ReportCtrl', templateUrl: 'views/reports-general.tpl.html',
-        resolve: {
-            CurrentReportGroup: function($route, ReportGroup) {
-                // returns a promise
-                return ReportGroup.get({code: $route.current.params.area});
-            }
-        }
+
+    $routeProvider.when('/request/list', {
+        controller: 'RequestListCtrl', templateUrl: 'views/request-list.tpl.html',
     });
-    $routeProvider.when('/report/:area/:id',   {
-        controller: 'ReportViewCtrl', templateUrl: 'views/reports-view.tpl.html',
+    $routeProvider.when('/request/edit/:id', {
+        controller: 'RequestEditCtrl', templateUrl: 'views/request-edit.tpl.html',
     });
-    $routeProvider.when('/admin', {
-        controller: 'ReportAdminListCtrl', templateUrl: 'views/reports-admin-list.tpl.html',
-    });
-    $routeProvider.when('/admin/edit/:id', {
-        controller: 'ReportAdminEditCtrl', templateUrl: 'views/reports-admin-edit.tpl.html',
-    });
-    $routeProvider.when('/admin/new/', {
-        controller: 'ReportAdminCreateCtrl', templateUrl: 'views/reports-admin-edit.tpl.html',
+    $routeProvider.when('/request/new', {
+        controller: 'RequestCreateCtrl', templateUrl: 'views/request-edit.tpl.html',
     });
     $routeProvider.otherwise({redirectTo: '/'});
   }]);

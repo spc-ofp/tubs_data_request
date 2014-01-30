@@ -27,6 +27,11 @@ namespace tubs_data_request.Controllers
             return repo.Find<RequestHeader>(x => x.TripNo.ToUpper().Trim() == code.ToUpper().Trim()).SingleOrDefault();
         }
 
+        public Object GetCount() {
+            int result = WebApiApplication.UnitOfWork.Session.CreateCriteria(typeof(RequestHeader)).List<RequestHeader>().Count(); 
+            return new { Count = result };
+        }
+
         [HttpGet]
         public IEnumerable<RequestHeader> LookUp(string name = "")
         {
